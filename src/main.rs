@@ -37,7 +37,9 @@ enum Expr {
 
 fn main() {
     // Load the expression from a text file
-    let raw = std::fs::read_to_string("./expr.txt").unwrap();
+    let raw = std::fs::read_to_string("./expr.txt")
+        .unwrap()
+        .remove_whitespace();
 
     // Pass that expression into the expression parser.
     // Pro Tip: I am using doc comments. If you are reading this in vscode, go
@@ -160,12 +162,6 @@ fn factor(raw: String) -> (String, Box<Expr>) {
 /// unary ::= ['+' | '-'] group | number | unary
 /// ```
 fn unary(mut raw: String) -> (String, Box<Expr>) {
-    // Here is where not writing a proper tokenizer is coming to cause me pain.
-    // Raw strings have spaces and the parser doesn't like spaces. Placing trim
-    // wherever necessary to fix bugs seems to require less code than writing a
-    // tokenizer, so it is fine
-    raw.trim_self();
-
     // Send groups of to a separate functions to be handled. If it is pretended
     // by a -, it will be sent through unary anyway. The grammar is cleaner if
     // this inconsistency is ignored.
@@ -251,7 +247,7 @@ fn number(raw: String) -> (String, Box<Expr>) {
         format!("{}{}", last, chars.as_string()).trim_string(),
         Box::new(
             // Use rust's internal number parser to convert the string to a float
-            Expr::Number(number.into_float()),
+            Expr::Number(number.convert()),
         ),
     );
 }
