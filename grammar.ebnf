@@ -7,7 +7,7 @@ unary ::= ['+' | '-'] group | number | unary
 group ::= '(' expression ')'
 
 # Decimal or non-decimal number
-number ::= interger [. interger]
+number ::= interger ['.' interger]
 
 interger ::= digit [interger]
 digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
