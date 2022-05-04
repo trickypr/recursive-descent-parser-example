@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    // Fakes syntax hightlighting for the expression file. Is not an actual js
+    // file
+    "expr.txt": "javascript"
+  }
+}
